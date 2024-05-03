@@ -3,7 +3,8 @@ seeds = false
 skip-lint = false
 
 [programs.devnet]
-program_deploy_process = "GSoHM5npZKKRd1hnok7Pavgbi5KoN7inmytEBQKAqDqC"
+program_deploy_process = "GUMmopTgVTwGEprNnwek1atmWTUMS1JwMB1HFC92eRNu"
+
 
 [registry]
 url = "https://anchor.projectserum.com"

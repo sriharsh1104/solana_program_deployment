@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 
 declare_id!("GSoHM5npZKKRd1hnok7Pavgbi5KoN7inmytEBQKAqDqC"); // It will genrated new when user deploy it onChain on any devnet or mainnet
-
+//program id ="HgKMT7YfJA59KEYmFKLpq5iRGvBMbJNPaGmGZvrwFNEz";
 #[program]
 pub mod solana_hello_world {
     use super::*;
