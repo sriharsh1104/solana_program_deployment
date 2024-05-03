@@ -1,5 +1,5 @@
 
-# Solana Program Calling in React
+# Solana Program Deployment Manully
 
 This repository contains the source code and deployment instructions for a simple Basic create Message and update program on the Solana blockchain.
 
