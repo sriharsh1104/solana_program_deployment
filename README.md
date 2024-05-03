@@ -1,5 +1,5 @@
 
-# Solana Program Calling in React
+# Solana Program Deployment Manually
 
 This repository contains the source code and deployment instructions for a simple calculator program on the Solana blockchain.
 
