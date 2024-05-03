@@ -1,61 +1,57 @@
 use anchor_lang::prelude::*;
 
-declare_id!("GSoHM5npZKKRd1hnok7Pavgbi5KoN7inmytEBQKAqDqC");
+declare_id!("GSoHM5npZKKRd1hnok7Pavgbi5KoN7inmytEBQKAqDqC"); // It will genrated new when user deploy it onChain on any devnet or mainnet
 
 #[program]
-pub mod calculator {
+pub mod solana_hello_world {
     use super::*;
 
-    pub fn create_account(_ctx: Context<CreateAccount>) -> Result<()> {
+    pub fn create_message(ctx: Context<CreateMessage>, content: String) -> Result<()> {
+        let message: &mut Account<Message> = &mut ctx.accounts.message;
+        let author: &Signer = &ctx.accounts.author;
+        let clock: Clock = Clock::get().unwrap();
+    
+        message.author = *author.key;
+        message.timestamp = clock.unix_timestamp;
+        message.content = content;
+    
         Ok(())
     }
 
-    pub fn calculate(
-        ctx: Context<CalculateAccounts>,
-        perform: PerformSomeCalculation,
-        x: f64,
-        y: f64,
-    ) -> Result<()> {
-        let account = &mut ctx.accounts.account;
-        match perform {
-            PerformSomeCalculation::Addition => account.result = x + y,
-            PerformSomeCalculation::Subtraction => account.result = x - y,
-            PerformSomeCalculation::Multiplication => account.result = x * y,
-            PerformSomeCalculation::Division => account.result = x / y,
-        }
+    pub fn update_message(ctx: Context<UpdateMessage>, content: String) -> Result<()> {
+        let message: &mut Account<Message> = &mut ctx.accounts.message;
+        let author: &Signer = &ctx.accounts.author;
+        let clock: Clock = Clock::get().unwrap();
+    
+        message.author = *author.key;
+        message.timestamp = clock.unix_timestamp;
+        message.content = content;
+      
         Ok(())
     }
-}
-
-#[derive(AnchorDeserialize, AnchorSerialize)]
-pub enum PerformSomeCalculation {
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
 }
 
 #[derive(Accounts)]
-pub struct CreateAccount<'info> {
-    #[account(init,space=8+16, payer=payer)]
-    pub account: Account<'info, AccountData>,
-
+pub struct CreateMessage<'info> {
+    #[account(init, payer = author, space = 1000)]
+    pub message: Account<'info, Message>,
     #[account(mut)]
-    pub payer: Signer<'info>,
-
+    pub author: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
-pub struct CalculateAccounts<'info> {
+pub struct UpdateMessage<'info> {
     #[account(mut)]
-    pub account: Account<'info, AccountData>,
-
+    pub message: Account<'info, Message>,
     #[account(mut)]
-    pub payer: Signer<'info>,
+    pub author: Signer<'info>,
+    pub system_program: Program<'info, System>,
 }
 
 #[account]
-pub struct AccountData {
-    pub result: f64,
+pub struct Message {
+    pub author: Pubkey,
+    pub timestamp: i64,
+    pub content: String,
 }
